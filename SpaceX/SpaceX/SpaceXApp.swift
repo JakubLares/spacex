@@ -11,7 +11,7 @@ import SwiftUI
 struct SpaceXApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RocketList()
         }
     }
 }
