@@ -7,25 +7,28 @@
 
 import SwiftUI
 
-struct Rocket: Identifiable, Hashable {
-    var id = UUID()
-}
-
 struct RocketList: View {
 
-    @State private var rockets = [Rocket(), Rocket(), Rocket()]
+    @State private var rockets = Rockets()
 
     var body: some View {
         NavigationStack {
             List(rockets) { rocket in
                 NavigationLink(value: rocket) {
-                    RocketListRow()
+                    RocketListRow(rocket: rocket)
                 }
             }
             .navigationDestination(for: Rocket.self) { rocket in
-                RocketDetail()
+                RocketDetail(rocket: rocket)
             }
             .navigationTitle("Rockets")
+        }
+        .task {
+            do {
+                rockets = try await APIClient().fetchRockets() ?? []
+            } catch {
+                print("Error", error)
+            }
         }
     }
 }

@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct RocketListRow: View {
+
+    let rocket: Rocket
+
     var body: some View {
         HStack(spacing: 18) {
             Image("Rocket")
                 .resizable()
                 .frame(width: 30, height: 30)
-            VStack(alignment: .leading) {
-                Text("Falcon 1")
+            VStack(alignment: .leading, spacing: 2) {
+                Text(rocket.name)
                     .fontWeight(.bold)
-                Text("First flight: 24.3.2006")
+                Text("First flight: " + rocket.firstFlight)
                     .font(.caption)
                     .foregroundColor(.gray)
             }
@@ -28,6 +31,6 @@ struct RocketListRow: View {
 
 struct RocketListRow_Previews: PreviewProvider {
     static var previews: some View {
-        RocketListRow()
+        RocketListRow(rocket: Rocket.mock)
     }
 }

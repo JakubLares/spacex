@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RocketDetail: View {
+
+    let rocket: Rocket
+
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
@@ -15,6 +18,6 @@ struct RocketDetail: View {
 
 struct RocketDetail_Previews: PreviewProvider {
     static var previews: some View {
-        RocketDetail()
+        RocketDetail(rocket: Rocket.mock)
     }
 }
