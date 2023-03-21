@@ -7,7 +7,7 @@
 
 typealias Rockets = [Rocket]
 
-struct Rocket: Codable, Hashable, Identifiable {
+struct Rocket: Codable, Hashable, Equatable, Identifiable {
     let id: String
     let name: String
     let description: String

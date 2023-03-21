@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct SpaceXApp: App {
     var body: some Scene {
         WindowGroup {
-            RocketList()
+            RocketListView(
+                store:
+                    Store(
+                        initialState: RocketList.State(),
+                        reducer: Reducer(RocketList()),
+                        environment: ()
+                    )
+            )
         }
     }
 }

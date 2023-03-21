@@ -6,28 +6,60 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
-struct RocketList: View {
+struct RocketList: ReducerProtocol {
 
-    @State private var rockets = Rockets()
+    struct State: Equatable {
+        var rockets: IdentifiedArrayOf<RocketDetail.State> = []
+    }
+
+    enum Action: Equatable {
+        case getRockets
+        case rockets(TaskResult<[Rocket]>)
+        case rocket(id: RocketDetail.State.ID, action: RocketDetail.Action)
+    }
+
+    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+        switch action {
+        case .getRockets:
+            return EffectTask.task {
+                await .rockets(
+                    TaskResult {
+                        try await APIClient().fetchRockets()
+                    }
+                )
+            }
+        case let .rockets(.success(rockets)):
+            state.rockets = IdentifiedArrayOf(uniqueElements: rockets)
+            return .none
+        case .rockets(.failure(_)):
+            print("Failure")
+            return .none
+        }
+    }
+}
+
+struct RocketListView: View {
+
+    let store: StoreOf<RocketList>
 
     var body: some View {
-        NavigationStack {
-            List(rockets) { rocket in
-                NavigationLink(value: rocket) {
-                    RocketListRow(rocket: rocket)
+        WithViewStore(self.store) { viewStore in
+            NavigationStack {
+                List {
+                    ForEachStore(self.store.scope(state: \.rockets, action: RocketList.Action.rocket(id:action:))) { rocket in
+                        NavigationLink {
+                            RocketDetailView(store: rocket)
+                        } label: {
+                            RocketListRow(store: rocket)
+                        }
+                    }
                 }
+                .navigationTitle("Rockets")
             }
-            .navigationDestination(for: Rocket.self) { rocket in
-                RocketDetail(rocket: rocket)
-            }
-            .navigationTitle("Rockets")
-        }
-        .task {
-            do {
-                rockets = try await APIClient().fetchRockets() ?? []
-            } catch {
-                print("Error", error)
+            .onAppear {
+                viewStore.send(.getRockets)
             }
         }
     }
@@ -35,6 +67,13 @@ struct RocketList: View {
 
 struct RocketList_Previews: PreviewProvider {
     static var previews: some View {
-        RocketList()
+        RocketListView(
+            store:
+                Store(
+                    initialState: RocketList.State(),
+                    reducer: Reducer(RocketList()),
+                    environment: ()
+                )
+        )
     }
 }

@@ -6,23 +6,38 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
-struct RocketDetail: View {
+struct RocketDetail: ReducerProtocol {
 
-    let rocket: Rocket
+    typealias State = Rocket
+
+    enum Action: Equatable {
+    }
+
+    func reduce(into state: inout Rocket, action: Action) -> EffectTask<Action> {
+    }
+
+}
+
+struct RocketDetailView: View {
+
+    let store: StoreOf<RocketDetail>
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                RocketDetailOverview(text: rocket.description)
-                RocketDetailParameters(height: rocket.height.meters ?? 0, diameter: rocket.diameter.meters ?? 0, mass: rocket.mass.kg)
-                RocketDetailStageView(stage: StageViewModel(title: "First Stage", stage: rocket.firstStage))
-                RocketDetailStageView(stage: StageViewModel(title: "Second Stage", stage: rocket.secondStage))
-                RocketDetailImagesView(images: rocket.images)
+        WithViewStore(self.store) { viewStore in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    RocketDetailOverview(text: viewStore.description)
+                    RocketDetailParameters(height: viewStore.height.meters ?? 0, diameter: viewStore.diameter.meters ?? 0, mass: viewStore.mass.kg)
+                    RocketDetailStageView(stage: StageViewModel(title: "First Stage", stage: viewStore.firstStage))
+                    RocketDetailStageView(stage: StageViewModel(title: "Second Stage", stage: viewStore.secondStage))
+                    RocketDetailImagesView(images: viewStore.images)
+                }
+                .padding()
+                .navigationTitle(viewStore.name)
+                .navigationBarTitleDisplayMode(.inline)
             }
-            .padding()
-            .navigationTitle(rocket.name)
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -159,6 +174,6 @@ struct RocketDetailImagesView: View {
 
 struct RocketDetail_Previews: PreviewProvider {
     static var previews: some View {
-        RocketDetail(rocket: Rocket.mock)
+       RocketDetailView(store: Store(initialState: RocketDetail.State.mock, reducer: Reducer(RocketDetail()), environment: ()))
     }
 }
