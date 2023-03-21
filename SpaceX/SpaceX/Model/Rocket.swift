@@ -5,153 +5,61 @@
 //  Created by Jakub Lares on 20.03.2023.
 //
 
+typealias Rockets = [Rocket]
+
 struct Rocket: Codable, Hashable, Identifiable {
-    let name: String
     let id: String
+    let name: String
+    let description: String
     let firstFlight: String
-//    let height, diameter: Diameter
-//    let mass: Mass
-//    let firstStage: FirstStage
-//    let secondStage: SecondStage
-//    let engines: Engines
-//    let landingLegs: LandingLegs
-//    let payloadWeights: [PayloadWeight]
-//    let flickrImages: [String]
-//    let name, type: String
-//    let active: Bool
-//    let stages, boosters, costPerLaunch, successRatePct: Int
-//    let firstFlight, country, company: String
-//    let wikipedia: String
-//    let description, id: String
+    let images: [String]
+    let height: Dimension
+    let diameter: Dimension
+    let mass: Mass
+    let firstStage: Stage
+    let secondStage: Stage
 
     enum CodingKeys: String, CodingKey {
-//        case height, diameter, mass
-//        case firstStage = "first_stage"
-//        case secondStage = "second_stage"
-//        case engines
-//        case landingLegs = "landing_legs"
-//        case payloadWeights = "payload_weights"
-//        case flickrImages = "flickr_images"
-//        case name, type, active, stages, boosters
-//        case costPerLaunch = "cost_per_launch"
-//        case successRatePct = "success_rate_pct"
+        case height, diameter, mass
+        case firstStage = "first_stage"
+        case secondStage = "second_stage"
+        case images = "flickr_images"
         case name
         case firstFlight = "first_flight"
-        case id
-//        case country, company, wikipedia, description, id
+        case description, id
     }
 
-    static let mock = Rocket(name: "Falcon 1", id: "0", firstFlight: "1.1.2023")
+    static let mock = Rocket(
+        id: "0",
+        name: "Falcon 9",
+        description: "Falcon 9 is a two-stage rocket designed and manufactured by Space for the reliable and safe transport of satellites and the Dragon spacecraft into orbit.",
+        firstFlight: "1.1.2023",
+        images: ["https://farm5.staticflickr.com/4599/38583829295_581f34dd84_b.jpg", "https://farm5.staticflickr.com/4645/38583830575_3f0f7215e6_b.jpg", "https://farm5.staticflickr.com/4696/40126460511_b15bf84c85_b.jpg"],
+        height: Dimension(meters: 90, feet: nil),
+        diameter: Dimension(meters: 40, feet: nil),
+        mass: Mass(kg: 500_000, lb: 0),
+        firstStage: Stage(reusable: true, engines: 1, fuelAmountTons: 20.0, burnTimeSEC: 1000),
+        secondStage: Stage(reusable: false, engines: 4, fuelAmountTons: 20.1, burnTimeSEC: 1000)
+    )
 }
 
-// MARK: - Diameter
-struct Diameter: Codable, Hashable {
+struct Dimension: Codable, Hashable {
     let meters, feet: Double?
 }
 
-// MARK: - Engines
-struct Engines: Codable, Hashable {
-    let isp: ISP
-    let thrustSeaLevel, thrustVacuum: Thrust
-    let number: Int
-    let type, version: String
-    let layout: String?
-    let engineLossMax: Int?
-    let propellant1, propellant2: String
-    let thrustToWeight: Double
-
-    enum CodingKeys: String, CodingKey {
-        case isp
-        case thrustSeaLevel = "thrust_sea_level"
-        case thrustVacuum = "thrust_vacuum"
-        case number, type, version, layout
-        case engineLossMax = "engine_loss_max"
-        case propellant1 = "propellant_1"
-        case propellant2 = "propellant_2"
-        case thrustToWeight = "thrust_to_weight"
-    }
-}
-
-// MARK: - ISP
-struct ISP: Codable, Hashable {
-    let seaLevel, vacuum: Int
-
-    enum CodingKeys: String, CodingKey {
-        case seaLevel = "sea_level"
-        case vacuum
-    }
-}
-
-// MARK: - Thrust
-struct Thrust: Codable, Hashable {
-    let kN, lbf: Int
-}
-
-// MARK: - FirstStage
-struct FirstStage: Codable, Hashable {
-    let thrustSeaLevel, thrustVacuum: Thrust
+struct Stage: Codable, Hashable {
     let reusable: Bool
     let engines: Int
     let fuelAmountTons: Double
     let burnTimeSEC: Int?
 
     enum CodingKeys: String, CodingKey {
-        case thrustSeaLevel = "thrust_sea_level"
-        case thrustVacuum = "thrust_vacuum"
         case reusable, engines
         case fuelAmountTons = "fuel_amount_tons"
         case burnTimeSEC = "burn_time_sec"
     }
 }
 
-// MARK: - LandingLegs
-struct LandingLegs: Codable, Hashable {
-    let number: Int
-    let material: String?
-}
-
-// MARK: - Mass
 struct Mass: Codable, Hashable {
     let kg, lb: Int
 }
-
-// MARK: - PayloadWeight
-struct PayloadWeight: Codable, Hashable {
-    let id, name: String
-    let kg, lb: Int
-}
-
-// MARK: - SecondStage
-struct SecondStage: Codable, Hashable {
-    let thrust: Thrust
-    let payloads: Payloads
-    let reusable: Bool
-    let engines: Int
-    let fuelAmountTons: Double
-    let burnTimeSEC: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case thrust, payloads, reusable, engines
-        case fuelAmountTons = "fuel_amount_tons"
-        case burnTimeSEC = "burn_time_sec"
-    }
-}
-
-// MARK: - Payloads
-struct Payloads: Codable, Hashable {
-    let compositeFairing: CompositeFairing
-    let option1: String
-
-    enum CodingKeys: String, CodingKey {
-        case compositeFairing = "composite_fairing"
-        case option1 = "option_1"
-    }
-}
-
-// MARK: - CompositeFairing
-struct CompositeFairing: Codable, Hashable {
-    let height, diameter: Diameter
-}
-
-typealias Rockets = [Rocket]
-

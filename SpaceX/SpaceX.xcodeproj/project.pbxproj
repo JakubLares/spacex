@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E316D9F329C9A0BA00770494 /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E316D9F229C9A0BA00770494 /* CustomColor.swift */; };
 		E36895AB29C499DA00131D32 /* SpaceXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36895AA29C499DA00131D32 /* SpaceXApp.swift */; };
 		E36895AF29C499DB00131D32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E36895AE29C499DB00131D32 /* Assets.xcassets */; };
 		E36895B229C499DB00131D32 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E36895B129C499DB00131D32 /* Preview Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E316D9F229C9A0BA00770494 /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		E36895A729C499DA00131D32 /* SpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E36895AA29C499DA00131D32 /* SpaceXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceXApp.swift; sourceTree = "<group>"; };
 		E36895AE29C499DB00131D32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				E36895BF29C4AA7700131D32 /* RocketDetail */,
 				E36895B829C4A03D00131D32 /* RocketList */,
 				E36895AA29C499DA00131D32 /* SpaceXApp.swift */,
+				E316D9F229C9A0BA00770494 /* CustomColor.swift */,
 				E36895AE29C499DB00131D32 /* Assets.xcassets */,
 				E36895B029C499DB00131D32 /* Preview Content */,
 			);
@@ -183,6 +186,7 @@
 			files = (
 				E36895C129C4AA8000131D32 /* RocketDetail.swift in Sources */,
 				E36895BA29C4A05100131D32 /* RocketList.swift in Sources */,
+				E316D9F329C9A0BA00770494 /* CustomColor.swift in Sources */,
 				E3695D7229C8499000C92B47 /* APIClient.swift in Sources */,
 				E3695D7529C84D2D00C92B47 /* Rocket.swift in Sources */,
 				E36895AB29C499DA00131D32 /* SpaceXApp.swift in Sources */,
@@ -315,6 +319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpaceX/Preview Content\"";
+				DEVELOPMENT_TEAM = E2J23KHEPT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -327,7 +332,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cz.lares.SpaceX;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.lares.SpaceXBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -343,6 +348,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpaceX/Preview Content\"";
+				DEVELOPMENT_TEAM = E2J23KHEPT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -355,7 +361,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cz.lares.SpaceX;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.lares.SpaceXBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
