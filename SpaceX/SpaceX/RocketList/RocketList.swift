@@ -16,24 +16,26 @@ struct RocketList: ReducerProtocol {
 
     enum Action: Equatable {
         case getRockets
-        case rockets(TaskResult<[Rocket]>)
+        case fetchedRockets(TaskResult<[Rocket]>)
         case rocket(id: RocketDetail.State.ID, action: RocketDetail.Action)
     }
+
+    @Dependency(\.rocketRepository.fetchRockets) var fetchRockets
 
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case .getRockets:
             return EffectTask.task {
-                await .rockets(
+                await .fetchedRockets(
                     TaskResult {
-                        try await APIClient().fetchRockets()
+                        try await fetchRockets()
                     }
                 )
             }
-        case let .rockets(.success(rockets)):
+        case let .fetchedRockets(.success(rockets)):
             state.rockets = IdentifiedArrayOf(uniqueElements: rockets)
             return .none
-        case .rockets(.failure(_)):
+        case .fetchedRockets(.failure(_)):
             print("Failure")
             return .none
         }
@@ -67,13 +69,8 @@ struct RocketListView: View {
 
 struct RocketList_Previews: PreviewProvider {
     static var previews: some View {
-        RocketListView(
-            store:
-                Store(
-                    initialState: RocketList.State(),
-                    reducer: Reducer(RocketList()),
-                    environment: ()
-                )
-        )
+        RocketListView(store: Store(initialState: RocketList.State(), reducer: RocketList(), prepareDependencies: { dependencies in
+            dependencies.rocketRepository = .previewValue
+        }))
     }
 }

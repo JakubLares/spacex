@@ -16,8 +16,7 @@ struct SpaceXApp: App {
                 store:
                     Store(
                         initialState: RocketList.State(),
-                        reducer: Reducer(RocketList()),
-                        environment: ()
+                        reducer: RocketList()
                     )
             )
         }

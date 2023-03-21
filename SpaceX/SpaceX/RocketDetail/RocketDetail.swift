@@ -174,6 +174,6 @@ struct RocketDetailImagesView: View {
 
 struct RocketDetail_Previews: PreviewProvider {
     static var previews: some View {
-       RocketDetailView(store: Store(initialState: RocketDetail.State.mock, reducer: Reducer(RocketDetail()), environment: ()))
+        RocketDetailView(store: Store(initialState: RocketDetail.State.mock, reducer: RocketDetail()))
     }
 }

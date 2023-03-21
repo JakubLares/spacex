@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E316D9F329C9A0BA00770494 /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E316D9F229C9A0BA00770494 /* CustomColor.swift */; };
 		E316D9F629C9B94600770494 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E316D9F529C9B94600770494 /* ComposableArchitecture */; };
+		E316D9F929C9F19000770494 /* RocketsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E316D9F829C9F19000770494 /* RocketsRepository.swift */; };
 		E36895AB29C499DA00131D32 /* SpaceXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36895AA29C499DA00131D32 /* SpaceXApp.swift */; };
 		E36895AF29C499DB00131D32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E36895AE29C499DB00131D32 /* Assets.xcassets */; };
 		E36895B229C499DB00131D32 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E36895B129C499DB00131D32 /* Preview Assets.xcassets */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		E316D9F229C9A0BA00770494 /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		E316D9F829C9F19000770494 /* RocketsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketsRepository.swift; sourceTree = "<group>"; };
 		E36895A729C499DA00131D32 /* SpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E36895AA29C499DA00131D32 /* SpaceXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceXApp.swift; sourceTree = "<group>"; };
 		E36895AE29C499DB00131D32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -44,6 +46,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E316D9F729C9F18100770494 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				E316D9F829C9F19000770494 /* RocketsRepository.swift */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
 		E368959E29C499DA00131D32 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +73,7 @@
 		E36895A929C499DA00131D32 /* SpaceX */ = {
 			isa = PBXGroup;
 			children = (
+				E316D9F729C9F18100770494 /* Dependencies */,
 				E3695D7329C84D2300C92B47 /* Model */,
 				E3695D7029C8497F00C92B47 /* API */,
 				E36895BF29C4AA7700131D32 /* RocketDetail */,
@@ -197,6 +208,7 @@
 				E316D9F329C9A0BA00770494 /* CustomColor.swift in Sources */,
 				E3695D7229C8499000C92B47 /* APIClient.swift in Sources */,
 				E3695D7529C84D2D00C92B47 /* Rocket.swift in Sources */,
+				E316D9F929C9F19000770494 /* RocketsRepository.swift in Sources */,
 				E36895AB29C499DA00131D32 /* SpaceXApp.swift in Sources */,
 				E36895BC29C4A09C00131D32 /* RocketListRow.swift in Sources */,
 			);
