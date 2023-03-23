@@ -60,7 +60,7 @@ struct RocketDetailOverview: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Overview")
-                .fontWeight(.bold)
+                .bold()
             Text(text)
         }
     }
@@ -73,7 +73,7 @@ struct RocketDetailParameters: View {
 
     var body: some View {
         Text("Parameters")
-            .fontWeight(.bold)
+            .bold()
         HStack(alignment: .top, spacing: 24) {
             ParameterRectangle(title: formatMeters(number: height), subtitle: "height")
             ParameterRectangle(title: formatMeters(number: diameter), subtitle: "diameter")
@@ -98,15 +98,14 @@ struct ParameterRectangle: View {
     let subtitle: String
 
     var body: some View {
-        Rectangle()
+        RoundedRectangle(cornerRadius: 16, style: .continuous)
             .frame(width: squareSize, height: squareSize)
             .foregroundColor(.darkPink)
-            .cornerRadius(15)
             .overlay {
                 VStack(spacing: 8) {
                     Text(title)
                         .font(.title)
-                        .fontWeight(.bold)
+                        .bold()
                         .foregroundColor(.white)
                     Text(subtitle)
                         .font(.headline)
@@ -125,7 +124,7 @@ struct RocketDetailStageView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(stage.title)
-                .fontWeight(.bold)
+                .bold()
             Label(stage.reusable, image: "Reusable")
             Label(stage.engines, image: "Engine")
             Label(stage.fuel, image: "Fuel")
@@ -134,9 +133,8 @@ struct RocketDetailStageView: View {
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .background {
-            Rectangle()
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .foregroundColor(.whiteSmoke)
-                .cornerRadius(16)
         }
     }
 }
@@ -170,13 +168,13 @@ struct RocketDetailImagesView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Photos")
-                .fontWeight(.bold)
+                .bold()
             ForEach(images, id: \.self) { imageUrl in
                 AsyncImage(url: URL(string: imageUrl)) { image in
                     image.image?
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .cornerRadius(16)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 }
             }
         }

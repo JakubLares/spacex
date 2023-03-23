@@ -21,7 +21,7 @@ struct RocketListRow: View {
                     .frame(width: 30, height: 30)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(viewStore.name)
-                        .fontWeight(.bold)
+                        .bold()
                     Text("First flight: " + viewStore.firstFlight)
                         .font(.caption)
                         .foregroundColor(.gray)
