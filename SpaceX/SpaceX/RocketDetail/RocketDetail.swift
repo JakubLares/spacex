@@ -1,0 +1,188 @@
+//
+//  RocketDetail.swift
+//  SpaceX
+//
+//  Created by Jakub Lares on 17.03.2023.
+//
+
+import SwiftUI
+import ComposableArchitecture
+
+struct RocketDetail: ReducerProtocol {
+
+    typealias State = Rocket
+
+    enum Action: Equatable {
+    }
+
+    func reduce(into state: inout Rocket, action: Action) -> EffectTask<Action> {
+    }
+
+}
+
+struct RocketDetailView: View {
+
+    let store: StoreOf<RocketDetail>
+
+    var body: some View {
+        WithViewStore(self.store) { viewStore in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    RocketDetailOverview(text: viewStore.description)
+                    RocketDetailParameters(height: viewStore.height.meters ?? 0, diameter: viewStore.diameter.meters ?? 0, mass: viewStore.mass.kg)
+                    RocketDetailStageView(stage: StageViewModel(title: "First Stage", stage: viewStore.firstStage))
+                    RocketDetailStageView(stage: StageViewModel(title: "Second Stage", stage: viewStore.secondStage))
+                    RocketDetailImagesView(images: viewStore.images)
+                }
+                .padding()
+                .navigationTitle(viewStore.name)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            RocketSimulatorView(
+                                store: Store(initialState: RocketSimulator.State(), reducer: RocketSimulator())
+                            )
+                        } label: {
+                            Text("Launch")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct RocketDetailOverview: View {
+
+    let text: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Overview")
+                .bold()
+            Text(text)
+        }
+    }
+}
+
+struct RocketDetailParameters: View {
+    let height: Double
+    let diameter: Double
+    let mass: Int
+
+    var body: some View {
+        Text("Parameters")
+            .bold()
+        HStack(alignment: .top, spacing: 24) {
+            ParameterRectangle(title: formatMeters(number: height), subtitle: "height")
+            ParameterRectangle(title: formatMeters(number: diameter), subtitle: "diameter")
+            ParameterRectangle(title: "\(mass / 1000)t", subtitle: "mass")
+        }
+    }
+
+    private static var formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }()
+
+    private func formatMeters(number: Double) -> String {
+        return "\(Self.formatter.string(from: number as NSNumber) ?? "0")m"
+    }
+}
+
+struct ParameterRectangle: View {
+    let title: String
+    let subtitle: String
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 16, style: .continuous)
+            .frame(width: squareSize, height: squareSize)
+            .foregroundColor(.darkPink)
+            .overlay {
+                VStack(spacing: 8) {
+                    Text(title)
+                        .font(.title)
+                        .bold()
+                        .foregroundColor(.white)
+                    Text(subtitle)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                }
+            }
+    }
+
+    private var squareSize: CGFloat {
+        return (UIScreen.main.bounds.width - 80) / 3
+    }
+}
+
+struct RocketDetailStageView: View {
+    let stage: StageViewModel
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(stage.title)
+                .bold()
+            Label(stage.reusable, image: "Reusable")
+            Label(stage.engines, image: "Engine")
+            Label(stage.fuel, image: "Fuel")
+            Label(stage.burn, image: "Burn")
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .foregroundColor(.whiteSmoke)
+        }
+    }
+}
+
+struct StageViewModel {
+    let title: String
+    let reusable: String
+    let engines: String
+    let fuel: String
+    let burn: String
+
+    init(title: String, stage: Stage) {
+        self.title = title
+        reusable = stage.reusable ? "reusable" : "not reusable"
+        engines = "\(stage.engines) \(stage.engines > 1 ? "engines" : "engine")"
+        fuel = "\(Self.formatter.string(from: stage.fuelAmountTons as NSNumber) ?? "0") tons of fuel"
+        burn = "\(stage.burnTimeSEC ?? 0) seconds burn time"
+    }
+
+    private static var formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+}
+
+struct RocketDetailImagesView: View {
+    let images: [String]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Photos")
+                .bold()
+            ForEach(images, id: \.self) { imageUrl in
+                AsyncImage(url: URL(string: imageUrl)) { image in
+                    image.image?
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                }
+            }
+        }
+    }
+}
+
+struct RocketDetail_Previews: PreviewProvider {
+    static var previews: some View {
+        RocketDetailView(store: Store(initialState: RocketDetail.State.mock, reducer: RocketDetail()))
+    }
+}
